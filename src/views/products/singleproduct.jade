@@ -1,0 +1,216 @@
+html
+	head
+		link(rel='stylesheet', href='../../style.css')
+		link(href='https://fonts.googleapis.com/css?family=Lobster', rel='stylesheet', type='text/css')
+		link(href='https://fonts.googleapis.com/css?family=Poiret+One', rel='stylesheet', type='text/css')
+
+
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible', content='IE=edge')
+		meta(name='viewport', content='width=device-width, initial-scale=1')
+		meta(name='description', content='')
+		meta(name='author', content='')
+		script(type='text/javascript', src="http://code.jquery.com/jquery-1.9.1.min.js")
+		script(type='text/javascript', src="http://code.jquery.com/ui/1.11.4/jquery-ui.js")
+		script(type='text/javascript', src="http://code.jquery.com/ui/1.11.4/jquery-ui.js")
+
+		
+		script.
+			$(document).ready(function() {
+				var _intervalId;
+	
+				function fadeInLastImg()
+				{
+					var backImg = $('.image img:first');
+					backImg.hide();
+					backImg.remove();
+					$('.image' ).append( backImg );
+					backImg.fadeIn()
+				};
+		
+				_intervalId = setInterval( function() {
+					fadeInLastImg();
+				}, 8000 );
+
+			});
+
+			$(document).ready(function(){
+					$(".basketfield").hide();
+					$("#basket").show();
+					$('.c-maskis').hide();
+					$('.dropdown-bar').hide();
+					$('.dropdown-bar2').hide();
+					//- $('.singleproduct').hide();
+
+					$("#contact").click(function(){
+						$(".contactform").toggle("slow");
+					});
+					//- $("#closing").click(function(){
+					//- 	$(".singleproduct").toggle("slow");
+					//- });
+					$("#basket").click(function(){
+						$(".basketfield").toggle('drop', {direction: 'right'}, 300);
+						$(".c-maskis").toggle('blind', 100);
+
+					});
+					$("#basket2").click(function(){
+						$(".basketfield").toggle('drop',{direction: 'right'}, 300);
+						$(".c-maskis").toggle('blind', 100);
+
+					});	
+					$('#clicker').click(function() {
+						$('.dropdown-bar').slideToggle('slow');
+						return false;
+					});
+					$('#clicker2').click(function(){
+						$('.dropdown-bar2').slideToggle('slow');
+						return false
+					});
+					
+					$('#closing').click(function(){
+						$('.singleproduct').toggle('fade');
+					});
+
+					$(".basketje").on("click", function(e){
+						e.preventDefault();
+						var name = $(".name").text();
+						var price = $(".price").text();
+						var size = $(".size").text();
+						var user = $(".username").text();
+						var userid = $(".userID").text();
+						var color = $(".color").text();
+						var productid = $(".productid").text();
+						var image1 = $(".singleproductimg").attr('src');
+						console.log(name);
+						console.log(price);
+						console.log(size);
+						console.log(user);
+						console.log(userid);
+
+
+						var data = {name: name, price: price, size: size, user: user, userid: userid, image1:image1, color:color, productid: productid};
+						$.post("../../basket", data);
+						console.log(data);
+						console.log(data.name);
+						console.log(data.price);
+						console.log(data.size);
+						console.log(data.user);
+						console.log(data.userid);
+				});
+			}); 
+			
+
+
+
+	body.productpagina
+
+
+		div(class ="navbar-horizontal")
+			div(class="logoo")
+				p(class="logo2") formadores >
+			div(class ="navbar-horizontal-nav")
+				ul 
+					li #[a(class ="nav-link")(href="/")  HOME]
+					li #[a(class ="nav-link-parent" id="clicker")(href="")  SHOP]
+					li #[a(class ="nav-link-parent" id="clicker2")(href="")  MERKEN]
+					li #[a(class ="nav-link")(href="")  SALE]
+			div(class="dropdown-bar")
+				ul(class="dropdowntje")
+					#[a(class="droplinkie")(href="/products/filter?category=vrouwenschoenen")  VROUWENSNEAKERS]
+					#[a(class="droplinkie")(href="/products/filter?category=mannenschoenen")  MANNENSNEAKERS]
+					#[a(class="droplinkie")(href="/products/filter?category=kidsschoenen") KINDERSNEAKERS]
+					#[a(class="droplinkie")(href="/products/filter?category=asseccoires")  ACCESSOIRES]
+			div(class="dropdown-bar2")
+				ul(class="dropdowntje2")
+					#[a(class="droplinkie2")(href="/products/filter?merk=adidas") ADIDAS]
+					#[a(class="droplinkie2")(href="/products/filter?merk=asics") ASICS]
+					#[a(class="droplinkie2")(href="/products/filter?merk=clarks") CLARKS]
+					#[a(class="droplinkie2")(href="/products/filter?merk=diadora") DIADORA]
+					#[a(class="droplinkie2")(href="/products/filter?merk=newbalance") NEW BALANCE]
+					#[a(class="droplinkie2")(href="/products/filter?merk=nike") NIKE]
+					#[a(class="droplinkie2")(href="/products/filter?merk=puma") PUMA]
+
+			if !username 
+					#[a( class ="registertop" href="../users/register") REGISTER]
+					form(class ="loginformtop" action='/logintjes' method='post')
+							br
+							input(class="input" placeholder = "email" name='email')
+							br
+							input(class="input" placeholder = "password" name='password' type='password')
+							br
+							input(class="inputsubmit" type='submit' value='login' height: 22px)
+							br
+							
+							p(class="loginmessage")=message
+
+
+
+			if username
+				div(class="wrap")
+					p(class="username") #{username.username}
+					p(class="userID" style="display:none;") #{username.id}
+					#[a(class="profile-link")(href="../../users/" +  username.id) SHOW PROFILE]
+					#[a(class ="nav-link-logout")(href="/logout")  LOG OUT]
+					#[a(class ="nav-link-basket" id="basket") BASKET]
+
+		div(class="o-wrapper" id="o-wrapper")
+			div(class="basketfield")
+				#[a #[img(class="nav-link-basketcloser" id="basket2" src="../../img/close.png" width="25px" height="25px")]]
+				div(class="productsbasket") PRODUCTS:
+					each basket in allBaskets
+						br
+						br
+						img(class="basketimg" src="#{basket.image1}")
+
+						p(class="basketname") NAAM: #{basket.name}
+						p(class="basketsize") MAAT: #{basket.size}
+						p(class="basketprice") PRIJS: #{basket.price} ,-
+				
+
+				input(class="confirm" type='submit' value='ORDER' height: 22px)
+			
+
+			div(class="social")
+				#[a(href="")#[img(src="../../img/facebook.png" width="25px" height="auto")]]
+				#[a(href="")#[img(src="../../img/instagram.png" width="25px" height="auto")]]
+				#[a(href="")#[img(src="../	../img/twitter.png" width="25px" height="auto")]]
+
+			div(class="socialhover")
+				#[a(href="")#[img(class ="fb" src="../../img/hover/facebook.png" width="25px" height="auto")]]
+				#[a(href="")#[img(class = "insta" src="../../img/hover/instagram.png" width="25px" height="auto")]]
+				#[a(href="")#[img(class ="twitter" src="../../img/hover/twitter.png" width="25px" height="auto")]]
+
+
+
+
+			//- p not a user yet? #[a(href="users/register") Register]
+			div(id="c-mask" class="c-mask")
+			div(id="c-maskis" class="c-maskis")
+			div(class="footerblack")
+				p copyright Kevin de Jonge 2016
+
+			div(class="singleproductje" id="product")
+				ul
+					img(alt="productjes" class ="singleproductimg" src="#{image1}")
+					//- img(class ="singleproductimg2" src="#{image2}")
+					//- img(class ="singleproductimg3" src="#{image3}")
+				
+				div(class="info")
+					form(action="/basket" method="post")
+						p(class="name") #{name}
+						p(class="productid" style="display:none;") #{ID}
+						p(class="color" style="display:none;") #{color}
+						p(class="productprice")
+						p PRIJS: #[p(class="price") #{price}]
+						p MAAT:
+						select
+							option(class="size") #{size}
+						br
+					if username
+						input(class="basketje" type="submit" value="IN WINKELWAGEN" formaction="/basket" method="post")
+					if !username
+						p(style="font-size:14px;") log in om te bestellen.
+					br
+					input(type="button" value="Terug naar producten" onclick="history.back(-1)" )
+
+		

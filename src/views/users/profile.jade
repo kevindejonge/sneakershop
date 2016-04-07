@@ -1,0 +1,149 @@
+html
+	head
+		link(rel='stylesheet', href='../style.css')
+		link(href='https://fonts.googleapis.com/css?family=Lobster', rel='stylesheet', type='text/css')
+		link(href='https://fonts.googleapis.com/css?family=Poiret+One', rel='stylesheet', type='text/css')
+
+
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible', content='IE=edge')
+		meta(name='viewport', content='width=device-width, initial-scale=1')
+		meta(name='description', content='')
+		meta(name='author', content='')
+		script(type='text/javascript', src="http://code.jquery.com/jquery-1.9.1.min.js")
+		script.
+			$(document).ready(function() {
+				var _intervalId;
+
+				function fadeInLastImg()
+				{
+					var backImg = $('.image img:first');
+					backImg.hide();
+					backImg.remove();
+					$('.image' ).append( backImg );
+					backImg.fadeIn()
+				};
+		
+				_intervalId = setInterval( function() {
+					fadeInLastImg();
+				}, 8000 );
+
+			});
+
+			$(document).ready(function(){
+				$(".editlink").on("click", function(e){ e.preventDefault();
+					var dataset = $(this).prev(".datainfo");
+					var savebtn = $(this).next(".savebtn");
+					var theid   = dataset.attr("id");
+					var newid   = theid+"-form";
+					var currval = dataset.text();
+						
+					dataset.empty();
+						
+					$('<input type="text" name="'+newid+'" id="'+newid+'" value="'+currval+'" class="hlite">').appendTo(dataset);
+						
+					$(this).css("display", "none");
+					savebtn.css("display", "block");
+				});
+				$(".savebtn").on("click", function(e){
+					e.preventDefault();
+					var elink   = $(this).prev(".editlink");
+					var dataset = elink.prev(".datainfo");
+					var newid   = dataset.attr("id");
+				
+					var cinput  = "#"+newid+"-form";
+					var einput  = $(cinput);
+					var newval  = einput.val();
+				
+					$(this).css("display", "none");
+					einput.remove();
+					dataset.html(newval);
+
+
+
+					elink.css("display", "block");
+					var data = {id: newid, newValue: newval};
+					$.post("profile", data);
+					console.log(data);
+					console.log(data.id);
+					console.log(data.newValue);
+
+
+
+
+
+				});
+			});
+
+
+	body.container
+		div(class="image")
+			img(src="../img/sneakertje.jpg")
+			img(src="../img/asics1.jpg")
+			img(src="../img/asics2.jpg")
+			img(src="../img/nike1.jpg")
+			img(src="../img/adidas1.jpg")                       
+			img(src="../img/puma1.jpg")
+		if username
+			p(class="username") #{username.username}
+			#[a(class="home")(href="/") HOME]
+			#[a(class ="nav-link-logout-profile")(href="/logout")  LOG OUT]
+			div(class="profile")
+				img(src="../img/profile.png")
+				div(class="gev")
+					span(id="username" class="datainfo") #{username.username} 
+					#[a(href="#" class="editlink") edit] 
+					#[a(class="savebtn") save]
+					hr
+					span(id="email" class="datainfo") #{username.email}
+					#[a(href="#" class="editlink") edit] 
+					#[a(class="savebtn") save]
+					hr
+					span(id="name" class="datainfo") #{username.name}
+					#[a(href="#" class="editlink") edit]
+					#[a(href="#" class="savebtn") save]
+					hr
+					span(id="lastname" class="datainfo") #{username.lastname}
+					#[a(href="#" class="editlink") edit]
+					#[a(href="#" class="savebtn") save]
+					hr
+					span(id="telepphone" class="datainfo") #{username.telephone}
+					#[a(href="#" class="editlink") edit]
+					#[a(href="#" class="savebtn") save]
+					hr
+					span(id="addres" class="datainfo") #{username.addres}
+					#[a(href="#" class="editlink") edit]
+					#[a(href="#" class="savebtn") save]
+					hr
+					span(id="postalcode" class="datainfo") #{username.postalcode}
+					#[a(href="#" class="editlink") edit]
+					#[a(href="#" class="savebtn") save]
+					hr
+					span(id="city" class="datainfo") #{username.city}
+					#[a(href="#" class="editlink") edit]
+					#[a(href="#" class="savebtn") save]
+					hr
+					span(id="day" class="datainfo") #{username.birthday}
+					#[a(href="#" class="editlink") edit]
+					#[a(href="#" class="savebtn") save]
+
+
+
+			div(class="social")
+				#[a(href="")#[img(src="../img/facebook.png" width="25px" height="auto")]]
+				#[a(href="")#[img(src="../img/instagram.png" width="25px" height="auto")]]
+				#[a(href="")#[img(src="../img/twitter.png" width="25px" height="auto")]]
+
+			div(class="socialhover")
+				#[a(href="")#[img(class ="fb" src="../img/hover/facebook.png" width="25px" height="auto")]]
+				#[a(href="")#[img(class = "insta" src="../img/hover/instagram.png" width="25px" height="auto")]]
+				#[a(href="")#[img(class ="twitter" src="../img/hover/twitter.png" width="25px" height="auto")]]
+
+
+			div(class="footer")
+				p copyright Kevin de Jonge 2016
+
+			div(class="gradientright")
+			div(class="gradientleft")
+			div(class="gradienthalf")
+			div(class="topgradient")

@@ -1,0 +1,171 @@
+html
+	head
+		link(rel='stylesheet' href='style.css')
+		link(href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css')
+		link(href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css')
+
+
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible' content='IE=edge')
+		meta(name='viewport' content='width=device-width, initial-scale=1')
+		meta(name='description' content='')
+		meta(name='author' content='')
+		script(type='text/javascript' src="http://code.jquery.com/jquery-1.9.1.min.js")
+		script(type='text/javascript' src="http://code.jquery.com/ui/1.11.4/jquery-ui.js")
+
+
+		script.
+			$(document).ready(function() {
+				var _intervalId;
+
+				function fadeInLastImg()
+				{
+					var backImg = $('.image img:first');
+					backImg.hide();
+					backImg.remove();
+					$('.image' ).append( backImg );
+					backImg.fadeIn()
+				};
+		
+				_intervalId = setInterval( function() {
+					fadeInLastImg();
+				}, 8000 );
+
+			});
+
+			$(document).ready(function(){
+				$(".basketfield").hide();
+				$("#basket").show();
+				$('.c-maskis').hide();
+
+					$("#contact").click(function(){
+						$(".contactform").toggle("slow");
+					});
+					$("#basket").click(function(){
+						$(".basketfield").toggle('drop', {direction: 'right'}, 300);
+						$(".c-maskis").toggle('blind', 100);
+
+					});
+					$("#basket2").click(function(){
+						$(".basketfield").toggle('drop',{direction: 'right'}, 300);
+						$(".c-maskis").toggle('blind', 100);
+
+					});
+
+			});
+
+
+	body.container
+		div(class="image")
+			img(src="img/sneakertje.jpg")
+			img(src="img/asics1.jpg")
+			img(src="img/asics2.jpg")
+			img(src="img/nike1.jpg")
+			img(src="img/adidas1.jpg")
+			img(src="img/puma1.jpg")
+
+
+		div(class ="navbar")
+			div(class ="navbar-nav")
+				ul 
+					li #[a(class ="nav-link" href="")  HOME]
+					if username
+						li #[a(class ="nav-link" href="products/index?userid=" + username.id)  SHOP]
+							ul(class="dropdown")
+								li#[a(class="droplink" href="/products/filter?category=vrouwenschoenen")  VROUWENSNEAKERS]
+								li#[a(class="droplink" href="/products/filter?category=mannenschoenen")  MANNENSNEAKERS]
+								li#[a(class="droplink" href="/products/filter?category=kidsschoenen") KINDERSNEAKERS]
+								li#[a(class="droplink" href="/products/filter?category=asseccoires")  ACCESSOIRES]
+					if !username
+						li #[a(class ="nav-link" href="products/index")  SHOP]
+							ul(class="dropdown")
+								li#[a(class="droplink" href="/products/filter?category=vrouwenschoenen")  VROUWENSNEAKERS]
+								li#[a(class="droplink" href="/products/filter?category=mannenschoenen")  MANNENSNEAKERS]
+								li#[a(class="droplink" href="/products/filter?category=kidsschoenen") KINDERSNEAKERS]
+								li#[a(class="droplink" href="/products/filter?category=asseccoires")  ACCESSOIRES]
+					li #[a(class ="nav-link" href="")  MERKEN]
+						ul(class="dropdown")
+							li#[a(class="droplink" href="/products/filter?merk=adidas") ADIDAS]
+							li#[a(class="droplink" href="/products/filter?merk=asics") ASICS]
+							li#[a(class="droplink" href="/products/filter?merk=clarks") CLARKS]
+							li#[a(class="droplink" href="/products/filter?merk=diadora") DIADORA]
+							li#[a(class="droplink" href="/products/filter?merk=newbalance") NEW BALANCE]
+							li#[a(class="droplink" href="/products/filter?merk=nike") NIKE]
+							li#[a(class="droplink" href="/products/filter?merk=puma") PUMA]
+
+
+
+					li #[a(class ="nav-link" id="contact")  CONTACT]
+					li #[a(class ="nav-link")(href="")  SALE]
+
+		div(class="contactform")
+			p Email:
+			p kevindejonge1991@gmail.com
+			hr
+			p Tel: 0636190949
+			hr
+			p Addres: Krelis Louwenstraat 5-D6
+			hr
+			p Postal code: 1055KA
+			hr
+			p City: Amsterdam
+			hr
+
+
+
+		div(class="logoo")
+			p(class="logo") formadores >
+				if !username 
+					form(class ="loginform" action='/login' method='post')
+							p(class ="register")#[a(href="users/register") REGISTER]
+							br
+							input(class="input" placeholder = "email" name='email' required)
+							br
+							input(class="input" placeholder = "password" name='password' type='password' required)
+							br
+							input(class="inputsubmit" type='submit' value='login' height: 22px)
+							br
+							
+							p(class="loginmessage")=message
+
+		if username
+			p(class="username") #{username.username}
+			#[a(class="profile-link")(href="users/" +  username.id) SHOW PROFILE]
+			#[a(class ="nav-link-logout")(href="/logout")  LOG OUT]
+			#[a(class ="nav-link-basket" id="basket") BASKET]
+
+			div(class="o-wrapper" id="o-wrapper")
+				div(class="basketfield")
+					#[a #[img(class="nav-link-basketcloser" id="basket2" src="../img/close.png" width="25px" height="25px")]]
+					div(class="productsbasket") PRODUCTS:
+						each basket in allBaskets
+							br
+							br
+							img(class="basketimg" src="#{basket.image1}")
+
+							p(class="basketname") NAAM: #{basket.name}
+							p(class="basketsize") MAAT: #{basket.size}
+							p(class="basketprice") PRIJS: #{basket.price} ,-
+					
+
+					input(class="confirm" type='submit' value='ORDER' height: 22px)
+			
+
+		div(class="social")
+			#[a(href="")#[img(src="img/facebook.png" width="25px" height="auto")]]
+			#[a(href="")#[img(src="img/instagram.png" width="25px" height="auto")]]
+			#[a(href="")#[img(src="img/twitter.png" width="25px" height="auto")]]
+
+		div(class="socialhover")
+			#[a(href="")#[img(class ="fb" src="img/hover/facebook.png" width="25px" height="auto")]]
+			#[a(href="")#[img(class = "insta" src="img/hover/instagram.png" width="25px" height="auto")]]
+			#[a(href="")#[img(class ="twitter" src="img/hover/twitter.png" width="25px" height="auto")]]
+
+		div(id="c-mask" class="c-mask")
+		div(id="c-maskis" class="c-maskis")
+		div(class="footer")
+			p copyright Kevin de Jonge 2016
+		div(class="gradientright")
+		div(class="gradientleft")
+		div(class="gradienthalf")
+		div(class="topgradient")

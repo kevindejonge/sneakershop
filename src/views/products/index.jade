@@ -1,0 +1,216 @@
+html
+	head
+		link(rel='stylesheet', href='../../style.css')
+		link(href='https://fonts.googleapis.com/css?family=Lobster', rel='stylesheet', type='text/css')
+		link(href='https://fonts.googleapis.com/css?family=Poiret+One', rel='stylesheet', type='text/css')
+
+
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible', content='IE=edge')
+		meta(name='viewport', content='width=device-width, initial-scale=1')
+		meta(name='description', content='')
+		meta(name='author', content='')
+		script(type='text/javascript', src="http://code.jquery.com/jquery-1.9.1.min.js")
+		script(type='text/javascript', src="http://code.jquery.com/ui/1.11.4/jquery-ui.js")
+
+
+		script.
+			$(document).ready(function(){
+				
+				var userid = $(".userID").text();
+				var data = {userid: userid};
+				$.get("/products/index", data, function(response) {
+					console.log(response)
+				});
+				console.log(data.userid);
+				$(".basketfield").hide();
+				$("#basket").show();
+				$('.c-maskis').hide();
+				$('.dropdown-bar').hide();
+				$('.dropdown-bar2').hide();
+				
+					$("#contact").click(function(){
+						$(".contactformproducts").toggle("slow");
+					});
+
+					$("#basket").click(function(){
+						$(".basketfield").toggle('drop', {direction: 'right'}, 300);
+						$(".c-maskis").toggle('blind', 100);
+
+					});
+					$("#basket2").click(function(){
+						$(".basketfield").toggle('drop',{direction: 'right'}, 300);
+						$(".c-maskis").toggle('blind', 100);
+
+					});	
+					$('#clicker').click(function() {
+						$('.dropdown-bar').slideToggle('slow');
+						return false;
+					});
+					$('#clicker2').click(function(){
+						$('.dropdown-bar2').slideToggle('slow');
+						return false
+					});
+
+			}); 
+
+
+
+	body.containertje
+
+		div(class="filter") 
+			div(class="filterknoppen")
+				form(id="filterform" action="/products/filter" method="get")
+					select(name="merk" class="merk")
+						option(value="" disabled selected) Merk
+						option(value="asics") Asics
+						option(value="adidas") Adidas
+						option(value="clarks") Clarks
+						option(value="diadora") Diadora
+						option(value="newbalance") New Balance
+						option(value="nike") Nike
+						option(value="puma") Puma
+					select(name="category")
+						option(value="" disabled selected) Category
+						option(value="mannenschoenen") Mannen
+						option(value="vrouwenschoenen") Vrouwen
+						option(value="kidsschoenen") Kids
+						option(value="accessoires") Accessoires
+					select(name="color")
+						option(value="" disabled selected) Kleur
+						option(value="black") Zwart
+						option(value="white") Wit
+						option(value="yellow") Geel
+						option(value="red") Rood
+						option(value="purple") Paars
+						option(value="green") Groen
+						option(value="blue") Blauw
+						option(value="grey") Grijs
+					input(type="submit" value="Filter" id="filteren")
+
+
+					button #[a(href="/products/index?userid=" + username.id class="wis") WIS FILTER]
+
+					//- input(name="maat" placeholder="maat" class="maat" type="text" size="5")
+		div(class="productcontent")
+			div(class="divide3")
+				each product in allProducts
+					div(class="product" id="product")
+						a( class="productlink" href="singleproduct/" + product.id)#[img(class ="productimg" src="#{product.image1}")]
+
+						div(class="productname")
+							span #{product.name}
+						p(class="productprice")
+							span€ #{product.price} 
+
+						//- iframe(class="singleproduct" data-src="/products/singleproduct/" src="singleproduct/" + product.id)
+
+		div(class ="navbar-horizontal")
+			div(class="logoo")
+				p(class="logo2") formadores >
+			div(class ="navbar-horizontal-nav")
+				ul 
+					li #[a(class ="nav-link")(href="/")  HOME]
+					li #[a(class ="nav-link-parent" id="clicker")(href="")  SHOP]
+					li #[a(class ="nav-link-parent" id="clicker2")(href="")  MERKEN]
+					li #[a(class ="nav-link" id="contact")  CONTACT]
+					li #[a(class ="nav-link")(href="")  SALE]
+			div(class="dropdown-bar")
+				ul(class="dropdowntje")
+					#[a(class="droplinkie")(href="/products/filter?category=vrouwenschoenen")  VROUWENSNEAKERS]
+					#[a(class="droplinkie")(href="/products/filter?category=mannenschoenen")  MANNENSNEAKERS]
+					#[a(class="droplinkie")(href="/products/filter?category=kidsschoenen") KINDERSNEAKERS]
+					#[a(class="droplinkie")(href="/products/filter?category=asseccoires")  ACCESSOIRES]
+			div(class="dropdown-bar2")
+				ul(class="dropdowntje2")
+					#[a(class="droplinkie2")(href="/products/filter?merk=adidas") ADIDAS]
+					#[a(class="droplinkie2")(href="/products/filter?merk=asics") ASICS]
+					#[a(class="droplinkie2")(href="/products/filter?merk=clarks") CLARKS]
+					#[a(class="droplinkie2")(href="/products/filter?merk=diadora") DIADORA]
+					#[a(class="droplinkie2")(href="/products/filter?merk=newbalance") NEW BALANCE]
+					#[a(class="droplinkie2")(href="/products/filter?merk=nike") NIKE]
+					#[a(class="droplinkie2")(href="/products/filter?merk=puma") PUMA]
+
+
+
+
+			div(class="contactformproducts")
+				p Email: 
+				p kevindejonge1991@gmail.com
+				hr
+				p Tel: 0636190949
+				hr
+				p Addres: Krelis Louwenstraat 5-D6
+				hr
+				p Postal code: 1055KA
+				hr
+				p City: Amsterdam
+				hr
+
+
+
+
+			if !username 
+					#[a( class ="registertop" href="../users/register") REGISTER]
+					form(class ="loginformtop" action='/logintje' method='post')
+							br
+							input(class="input" placeholder = "email" name='email')
+							br
+							input(class="input" placeholder = "password" name='password' type='password')
+							br
+							input(class="inputsubmit" type='submit' value='login' height: 22px)
+							br
+							
+							p(class="loginmessage")=message
+
+
+
+			if username
+				div(class="wrap")
+					p(class="username") #{username.username}
+					p(class="userID" style="display:none;") #{username.id}
+
+					#[a(class="profile-link")(href="../users/" +  username.id) SHOW PROFILE]
+					#[a(class ="nav-link-logout")(href="/logout")  LOG OUT]
+					#[a(class ="nav-link-basket" id="basket") BASKET]
+
+		div(class="o-wrapper" id="o-wrapper")
+			div(class="basketfield")
+				#[a #[img(class="nav-link-basketcloser" id="basket2" src="../img/close.png" width="25px" height="25px")]]
+				div(class="productsbasket") PRODUCTS:
+					each basket in allBaskets
+						br
+						br
+						img(class="basketimg" src="#{basket.image1}")
+
+						p(class="basketname") NAAM: #{basket.name}
+						p(class="basketsize") MAAT: #{basket.size}
+						p(class="basketprice") PRIJS: #{basket.price} ,-
+				
+
+				input(class="confirm" type='submit' value='ORDER' height: 22px)
+			
+				
+
+			div(class="social")
+				#[a(href="")#[img(src="../img/facebook.png" width="25px" height="auto")]]
+				#[a(href="")#[img(src="../img/instagram.png" width="25px" height="auto")]]
+				#[a(href="")#[img(src="../img/twitter.png" width="25px" height="auto")]]
+
+			div(class="socialhover")
+				#[a(href="")#[img(class ="fb" src="../img/hover/facebook.png" width="25px" height="auto")]]
+				#[a(href="")#[img(class = "insta" src="../img/hover/instagram.png" width="25px" height="auto")]]
+				#[a(href="")#[img(class ="twitter" src="../img/hover/twitter.png" width="25px" height="auto")]]
+
+
+
+
+			//- p not a user yet? #[a(href="users/register") Register]
+			div(id="c-mask" class="c-mask")
+			div(id="c-maskis" class="c-maskis")
+			div(class="footerblack")
+				p copyright Kevin de Jonge 2016
+
+
+
+			//- hier komt de rest van de webshop
